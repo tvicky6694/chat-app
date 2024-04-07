@@ -1,0 +1,59 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport" content="width=device-width, initial-scale=1.0")
+    title Simple Chat with Socket.IO
+    link(rel="stylesheet", href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css")
+  body
+    span(id="room" style="display:none;") #{room}
+    span(id="user" style="display:none;") #{user}
+    h1 Chat
+    input(type="text" id="messageInput" placeholder="Enter your message")
+    button(onclick="sendMessage()") Send
+    #chatMessages
+        if msgData.length > 0
+            each item, index in msgData
+                p #{item.message}
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.4/socket.io.js")
+    script.
+        const messageInput = document.getElementById('messageInput')
+        const chatMessages = document.getElementById('chatMessages')
+        const user = document.getElementById('user')
+        const room = document.getElementById('room')
+        
+        // Create a socket connection
+        const socket = io()
+         let joinData = {
+            user: user.innerText,
+            room: room.innerText
+        }
+        socket.emit('join',joinData)
+        // Handle connection established
+        socket.on('connect', () => {
+            console.log('Connected to server')
+        })
+
+        // Handle incoming messages
+        socket.on('message', (msg) => {
+            console.log("me");
+            const message = document.createElement('p')
+            message.innerText = msg.message;
+            chatMessages.appendChild(message)
+        })
+
+        // Handle incoming messages
+        socket.on('join', (msg) => {
+            console.log("Join");
+        })
+        // Send message on button click
+        const sendMessage = () => {
+            const message = messageInput.value;
+            let data = {
+                user: user.innerText,
+                room: room.innerText,
+                message: message
+            }
+            socket.emit('message', data)
+            messageInput.value = ''
+        }

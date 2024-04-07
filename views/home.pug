@@ -1,0 +1,28 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    title Table Example
+    link(rel="stylesheet", href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css")
+  body
+    .container.mt-5
+      table.table.table-bordered
+        thead
+          tr
+            th(scope="col") #
+            th(scope="col") Room Name
+            th(scope="col") Action
+        tbody
+          if rooms.length > 0
+            each room, index in rooms
+              tr
+                td= index + 1
+                td= room.name
+                td
+                  a.btn.btn-primary(href="/chat?id="+room._id) Join Room
+          else
+            tr
+              td(colspan="2") No rooms available
+                td(colspan="1")
+                  a.btn.btn-primary(href="/room") Create and Join Room

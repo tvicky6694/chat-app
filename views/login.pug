@@ -1,0 +1,82 @@
+html
+	head
+		title Login Form
+		style.
+			body {
+				font-family: Arial, sans-serif;
+				background-color: #f4f4f4;
+				margin: 0;
+				padding: 0;
+			}
+			h1 {
+				text-align: center;
+				margin-top: 50px;
+				color: #333;
+			}
+			form {
+				max-width: 400px;
+				margin: 20px auto;
+				background-color: #fff;
+				padding: 20px;
+				border-radius: 5px;
+				box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+			}
+			label {
+				font-weight: bold;
+			}
+			input[type="text"],
+			input[type="email"],
+			input[type="password"] {
+				width: 100%;
+				padding: 10px;
+				margin: 8px 0;
+				border: 1px solid #ccc;
+				border-radius: 4px;
+				box-sizing: border-box;
+			}
+			button[type="submit"] {
+				width: 100%;
+				background-color: #4CAF50;
+				color: white;
+				padding: 14px 20px;
+				margin: 8px 0;
+				border: none;
+				border-radius: 4px;
+				cursor: pointer;
+				font-size: 16px;
+			}
+			button[type="submit"]:hover {
+				background-color: #45a049;
+			}
+			.error-container {
+				background-color: #f8d7da; /* Red background color for error */
+				color: #721c24; /* Dark red text color */
+				padding: 10px; /* Padding around the error message */
+				border: 1px solid #f5c6cb; /* Border color for the container */
+				border-radius: 4px; /* Rounded corners for the container */
+				margin: 10px auto; /* Center the container horizontally */
+				width: 300px; /* Set a fixed width for the container */
+				text-align: center; /* Center the text horizontally */
+			}
+
+	script(src="/javascripts/common.js")
+	body
+		if(err)
+			.error-container
+				p.error-message #{msg}
+		h1 Login Form
+		form(action="/users/login" method="POST")
+			label(for="username") Username:
+			input(type="text", id="username", name="username", required)
+			span(id="errUsername" style="display:none;color:red;font-size:10px")
+				| Username is required
+			br
+			label(for="password") Password:
+			input(type="password", id="password", name="password", required)
+			span(id="errPassword" style="display:none;color:red;font-size:10px")
+				| Password is required
+			br
+			button(type="submit") Login
+			p(style="text-align: center;")
+				| Don't have an account? 
+				a(href="/register") Register
